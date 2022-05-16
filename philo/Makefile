@@ -6,7 +6,7 @@
 #    By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/15 13:44:31 by ghanquer          #+#    #+#              #
-#    Updated: 2022/03/21 15:00:39 by ghanquer         ###   ########.fr        #
+#    Updated: 2022/05/16 15:51:29 by ghanquer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ CC = clang $(CFLAGS)
 
 RM = rm -fr
 
-CFLAGS = -Wall -Wextra -Werror #-g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -pthread -Iinc/philo.h #-g3 -fsanitize=address
 
 .c.o:
 	$(CC) -c $< -o $(<:.c=.o)
@@ -34,7 +34,10 @@ CFLAGS = -Wall -Wextra -Werror #-g3 -fsanitize=address
 #HOW TO LIST .c 
 #	ls -l | awk '{print $9}' | grep -E ".c$"| sed "s/\.c/ \\\/g" | sed '$s/\\$//g'
 
-SRC_FT =
+SRC_FT = 	free_func \
+			ft_atoi \
+			main \
+			start_routine
 
 all: $(NAME)
 
@@ -45,7 +48,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) -c $< -o $@
 
 $(NAME): $(OBJ_DIRS) $(SRC)
-	$(MAKE) -j $(OBJ)
+	$(MAKE) $(OBJ)
 	$(CC) $(OBJ) -o $@
 
 clean:
