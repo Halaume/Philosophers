@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:07:48 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/17 15:14:28 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/17 15:28:09 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int	malloc_all(t_info *info)
 		init_this_philo(info, info->philo[i], i + 1);
 		if (pthread_mutex_init(info->fork[i], NULL) != 0)
 			return (free_fun(info), 1);
+		i++;
 	}
 	return (0);
 }
@@ -117,15 +118,19 @@ int	main(int argc, char **argv)
 	int			i;
 	t_reaper	reaper;
 
-	i = 0;
+	i = -1;
 	if (check_arg(argc, argv, &info) == 1)
 		return (1);
 	if (init_muthread(&info) == 1)
 		return (1);
 	if (init_reaper(&reaper, &info) == 1)
 		return (1);
-	while (i < info.nb_philo)
+	while (++i < info.nb_philo)
+	{
+		printf("Je join %d\n", i);
 		pthread_join(*info.thread_philo[i], NULL);
+		i++;
+	}
 	free_fun(&info);
 	return (0);
 }

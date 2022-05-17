@@ -6,7 +6,7 @@
 #    By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/15 13:44:31 by ghanquer          #+#    #+#              #
-#    Updated: 2022/05/16 15:51:29 by ghanquer         ###   ########.fr        #
+#    Updated: 2022/05/17 16:53:25 by ghanquer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,9 +54,8 @@ $(NAME): $(OBJ_DIRS) $(SRC)
 clean:
 	$(RM) $(OBJ_DIR)
 
-fclean: clean clean_bonus
+fclean: clean
 	$(RM) $(NAME)
-	$(RM) $(BNS_NAME)
 
 re: fclean all
 
