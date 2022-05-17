@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:00:51 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/17 17:21:08 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/17 17:44:47 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void				take_fork(t_philo *philo);
 //						REAPER
 
 void				*reaper(void *start);
+void				wipe_all(t_info *info);
 
 //						FREE
 
@@ -76,5 +77,6 @@ unsigned long long	get_now(t_info *info);
 int					is_dead(t_info *info);
 void				sleeping(useconds_t time);
 void				unlock_fork(t_philo *philo);
+int					have_all_eat(t_info *info);
 
 #endif

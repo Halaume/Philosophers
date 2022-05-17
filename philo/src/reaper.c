@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 17:13:44 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/17 17:17:27 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/17 17:45:48 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,21 @@ int	is_dead(t_info *info)
 	while (++i < info->nb_philo && info->philo[i])
 	{
 		if (info->philo[i]->is_dead == 1)
+			return (1);
+	}
+	return (0);
+}
+
+int	have_all_eat(t_info *info)
+{
+	int	i;
+
+	i = -1;
+	if (info->nb_of_eat < 0)
+		return (1);
+	while (++i < info->nb_philo && info->philo[i])
+	{
+		if (info->philo[i]->nb_eat < info->nb_of_eat)
 			return (1);
 	}
 	return (0);
@@ -54,6 +69,8 @@ void	*reaper(void *start)
 			wipe_all(reaper->info);
 			return (reaper);
 		}
+		if (reaper->info->philo[i]->is_dead == 1)
+			break ;
 		i++;
 		if (i >= reaper->info->nb_philo)
 			i = 0;
