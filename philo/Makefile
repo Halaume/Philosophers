@@ -6,7 +6,7 @@
 #    By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/15 13:44:31 by ghanquer          #+#    #+#              #
-#    Updated: 2022/05/17 16:53:25 by ghanquer         ###   ########.fr        #
+#    Updated: 2022/05/17 17:21:29 by ghanquer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,10 @@ CFLAGS = -Wall -Wextra -Werror -pthread -Iinc/philo.h #-g3 -fsanitize=address
 SRC_FT = 	free_func \
 			ft_atoi \
 			main \
-			start_routine
+			start_routine \
+			reaper \
+			routine_utils \
+			check_arg
 
 all: $(NAME)
 

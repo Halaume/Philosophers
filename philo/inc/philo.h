@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:00:51 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/17 14:45:40 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/17 17:21:08 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,32 @@ typedef struct s_reaper
 	pthread_t	my_reaper;
 }	t_reaper;
 
-long long	ft_atoi(const char *nptr);
-void		free_fun(t_info *info);
-void		*start_routine(void *mon_thread);
-void		*reaper(void *start);
-void		init_this_philo(t_info *info, t_philo *philo, int nb);
-void		sleeping(useconds_t time);
-void		is_sleeping(t_philo *philo);
-void		take_fork(t_philo *philo);
+//						INIT
+
+int					check_arg(int argc, char **argv, t_info *info);
+void				init_this_philo(t_info *info, t_philo *philo, int nb);
+
+//						ROUTINE
+
+void				*start_routine(void *mon_thread);
+void				sleeping(useconds_t time);
+void				is_sleeping(t_philo *philo);
+void				take_fork(t_philo *philo);
+
+//						REAPER
+
+void				*reaper(void *start);
+
+//						FREE
+
+void				free_fun(t_info *info);
+
+//						UTILS
+
+long long			ft_atoi(const char *nptr);
+unsigned long long	get_now(t_info *info);
+int					is_dead(t_info *info);
+void				sleeping(useconds_t time);
+void				unlock_fork(t_philo *philo);
 
 #endif
