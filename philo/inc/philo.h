@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:00:51 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/16 16:41:17 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/17 11:52:40 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 typedef struct s_info
 {
 	struct s_philo	**philo;
+	struct timeval	get_time;
+	struct timeval	start_time;
 	int				nb_of_eat;
 	pthread_t		**thread_philo;
 	int				nb_philo;
@@ -37,7 +39,7 @@ typedef struct s_philo
 	t_info	*info;
 	int		nb_eat;
 	int		last_time_eat;
-	int		my_nb;
+	int		nb;
 }	t_philo;
 
 long long	ft_atoi(const char *nptr);
@@ -45,5 +47,7 @@ void		free_fun(t_info *info);
 void		*start_routine(void *mon_thread);
 void		init_this_philo(t_info *info, t_philo *philo, int nb);
 void		sleeping(useconds_t time);
+void		is_sleeping(t_philo *philo);
+void		take_fork(t_philo *philo);
 
 #endif

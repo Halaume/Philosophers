@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:07:48 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/16 16:56:43 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/17 12:09:45 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	do_one(t_info *info)
 {
 	printf("0 1 has taken a fork\n");
-	sleeping(info->time_to_die * 1000);
+	sleeping(info->time_to_die);
 	printf("%d 1 died\n", info->time_to_die);
 }
 
@@ -53,6 +53,8 @@ int	check_arg(int argc, char **argv, t_info *info)
 	info->time_to_die = ft_atoi(argv[2]);
 	info->time_to_eat = ft_atoi(argv[3]);
 	info->time_to_sleep = ft_atoi(argv[4]);
+	gettimeofday(&info->get_time, NULL);
+	info->start_time = info->get_time;
 	if (double_check(info) == 1)
 		return (1);
 	info->philo = NULL;
@@ -98,10 +100,14 @@ int	init_muthread(t_info *info)
 int	main(int argc, char **argv)
 {
 	t_info	info;
+	int		i;
 
+	i = 0;
 	if (check_arg(argc, argv, &info) == 1)
 		return (1);
 	if (init_muthread(&info) == 1)
 		return (1);
+	while (i < info.nb_philo)
+		pthread_join(*info.thread_philo[i], NULL);
 	return (0);
 }
