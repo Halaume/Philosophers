@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 11:11:02 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/17 17:22:09 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/17 17:32:34 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ long long	ft_atoi(const char *nptr)
 	long long	nbr;
 
 	i = 0;
+	nbr = 0;
 	if (!nptr || !*nptr)
 		return (-1);
 	while (nptr[i] == '\f' || nptr[i] == '\t' || nptr[i] == '\v'
