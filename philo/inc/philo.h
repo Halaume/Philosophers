@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:00:51 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/17 17:44:47 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/18 16:53:33 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,13 @@
 
 typedef struct s_info
 {
+	int				*fork_lock;
 	struct s_philo	**philo;
+	struct s_reaper	*reaper;
 	struct timeval	get_time;
 	struct timeval	start_time;
 	int				nb_of_eat;
+	int				is_dead;
 	pthread_t		**thread_philo;
 	int				nb_philo;
 	int				time_to_die;
@@ -36,17 +39,27 @@ typedef struct s_info
 
 typedef struct s_philo
 {
-	t_info	*info;
-	int		nb_eat;
-	int		last_time_eat;
-	int		is_dead;
-	int		nb;
+	struct timeval	start;
+	struct timeval	get_time;
+	int				nb_eat;
+	int				nb_of_eat;
+	int				last_time_eat;
+	int				nb;
+	int				nb_philo;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				**fork_lock;
+	int				*is_dead;
+	struct s_reaper	**reaper;
+	pthread_mutex_t	***fork;
 }	t_philo;
 
 typedef struct s_reaper
 {
-	t_info		*info;
-	pthread_t	my_reaper;
+	t_info			*info;
+	pthread_t		my_reaper;
+	pthread_mutex_t	*scythe;
 }	t_reaper;
 
 //						INIT
@@ -69,12 +82,13 @@ void				wipe_all(t_info *info);
 //						FREE
 
 void				free_fun(t_info *info);
+void				destroy_mut(t_info *info);
 
 //						UTILS
 
 long long			ft_atoi(const char *nptr);
-unsigned long long	get_now(t_info *info);
-int					is_dead(t_info *info);
+unsigned long long	get_now(t_philo *philo);
+int					is_dead(t_philo *philo, t_reaper *reaper);
 void				sleeping(useconds_t time);
 void				unlock_fork(t_philo *philo);
 int					have_all_eat(t_info *info);

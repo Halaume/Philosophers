@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 13:44:36 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/16 16:45:44 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/18 16:59:59 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,24 @@ void	free_fun(t_info *info)
 	}
 	if (info->fork)
 		free(info->fork);
+	if (info->fork_lock)
+		free(info->fork_lock);
 	if (info->philo)
 		free(info->philo);
 	if (info->thread_philo)
 		free(info->thread_philo);
+}
+
+void	destroy_mut(t_info *info)
+{
+	int	i;
+
+	i = 0;
+	if (info->reaper->scythe)
+		pthread_mutex_destroy(info->reaper->scythe);
+	while (i < info->nb_philo)
+	{
+		if (info->fork[i])
+			pthread_mutex_destroy(info->fork[i]);
+	}
 }
