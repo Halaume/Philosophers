@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 17:13:44 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/18 17:07:35 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/18 17:49:27 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 int	is_dead(t_philo *philo, t_reaper *reaper)
 {
-	int	i;
 
-	i = -1;
 	pthread_mutex_lock(reaper->scythe);
 	if (*philo->is_dead == 1)
 		return (pthread_mutex_unlock(reaper->scythe), 1);

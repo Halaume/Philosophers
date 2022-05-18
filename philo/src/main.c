@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:07:48 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/18 16:58:26 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/18 17:51:40 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	launch_it(t_info *info)
 	int	i;
 
 	i = -1;
+	info->is_dead = 0;
 	while (++i < info->nb_philo)
 	{
 		if (i % 2 == 0)
