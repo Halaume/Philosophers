@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 13:51:49 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/19 14:14:29 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/19 17:36:48 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	eating(t_philo *philo)
 		return ;
 	}
 	ft_putstr("is eating\n", philo);
-	philo->nb_eat++;
 	set_last_eat(philo, *philo->reaper);
 	sleeping(philo->time_to_eat);
 	unlock_fork(philo);
@@ -35,12 +34,10 @@ int	took_fork(t_philo *philo)
 		philo->fork_lock[0][philo->nb - 1] = 1;
 		if (ft_putstr("has taken a fork\n", philo) == 1)
 			return (unlock_fork(philo), 1);
-		ft_putstr("has taken a fork\n", philo);
 		pthread_mutex_lock(philo->fork[0][philo->nb]);
 		philo->fork_lock[0][philo->nb] = 1;
 		if (ft_putstr("has taken a fork\n", philo) == 1)
 			return (unlock_fork(philo), 1);
-		ft_putstr("has taken a fork\n", philo);
 	}
 	else
 	{
@@ -48,12 +45,10 @@ int	took_fork(t_philo *philo)
 		philo->fork_lock[0][philo->nb] = 1;
 		if (ft_putstr("has taken a fork\n", philo) == 1)
 			return (unlock_fork(philo), 1);
-		ft_putstr("has taken a fork\n", philo);
 		pthread_mutex_lock(philo->fork[0][philo->nb - 1]);
 		philo->fork_lock[0][philo->nb - 1] = 1;
 		if (ft_putstr("has taken a fork\n", philo) == 1)
 			return (unlock_fork(philo), 1);
-		ft_putstr("has taken a fork\n", philo);
 	}
 	return (0);
 }

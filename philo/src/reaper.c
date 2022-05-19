@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 17:13:44 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/19 14:52:42 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/19 17:45:16 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,20 @@ int	is_dead(t_philo *philo, t_reaper *reaper)
 	return (0);
 }
 
-int	have_all_eat(t_info *info)
+int	have_all_eat(t_info *info, t_reaper *reaper)
 {
 	int	i;
 
 	i = -1;
 	if (info->nb_of_eat < 0)
 		return (1);
+	pthread_mutex_lock(&reaper->scythe);
 	while (++i < info->nb_philo && info->philo[i])
 	{
 		if (info->philo[i]->nb_eat < info->nb_of_eat)
-			return (1);
+			return (pthread_mutex_unlock(&reaper->scythe), 1);
 	}
+	pthread_mutex_unlock(&reaper->scythe);
 	return (0);
 }
 
@@ -58,6 +60,7 @@ unsigned long long get_now_reaper(t_info *info)
 void	set_last_eat(t_philo *philo, t_reaper *reaper)
 {
 	pthread_mutex_lock(&reaper->scythe);
+	philo->nb_eat++;
 	philo->last_time_eat = get_now(philo);
 	pthread_mutex_unlock(&reaper->scythe);
 }
@@ -81,8 +84,8 @@ void	*reaper(void *start)
 	i = 0;
 	while (1)
 	{
-		if (!have_all_eat(reaper->info))
-			return (reaper);
+		if (have_all_eat(reaper->info, reaper) == 0)
+			return (wipe_all(reaper->info), NULL);
 		if (get_now_reaper(reaper->info) - \
 				get_last_eat(reaper->info->philo[i], reaper) > \
 				(unsigned long long)reaper->info->time_to_die)
@@ -97,5 +100,5 @@ void	*reaper(void *start)
 		if (i >= reaper->info->nb_philo)
 			i = 0;
 	}
-	return (reaper);
+	return (NULL);
 }
