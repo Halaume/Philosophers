@@ -6,11 +6,11 @@
 #    By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/15 13:44:31 by ghanquer          #+#    #+#              #
-#    Updated: 2022/05/19 11:15:03 by ghanquer         ###   ########.fr        #
+#    Updated: 2022/05/19 17:50:50 by ghanquer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = philosophers
+NAME = philo
 
 INC_DIR =		inc
 OBJ_DIR = 		obj
@@ -57,10 +57,12 @@ $(NAME): $(OBJ_DIRS) $(SRC)
 	$(CC) $(OBJ) -o $@
 
 clean:
-	$(RM) $(OBJ_DIR)
+	@$(RM) $(OBJ_DIR)
+	@echo "Cleaned object"
 
 fclean: clean
-	$(RM) $(NAME)
+	@$(RM) $(NAME)
+	@echo "Cleaned program"
 
 re: fclean all
 

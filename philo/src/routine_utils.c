@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 17:08:05 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/19 17:38:02 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/19 17:57:46 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	unlock_fork(t_philo *philo)
 			pthread_mutex_unlock(philo->fork[0][philo->nb - 1]);
 		}
 	}
-	else
+	else if (philo->nb == philo->nb_philo)
 	{
 		if (philo->fork_lock[0][0] == 1)
 		{
