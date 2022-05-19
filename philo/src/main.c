@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:07:48 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/18 17:51:40 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/19 11:19:46 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	launch_it(t_info *info)
 	info->is_dead = 0;
 	while (++i < info->nb_philo)
 	{
-		if (i % 2 == 0)
+		if (i % 2 == 0 /*&& i != info->nb_philo - 1*/)
 		{
 			if (pthread_create(info->thread_philo[i], NULL, start_routine, \
 						info->philo[i]) != 0)
@@ -74,13 +74,16 @@ int	launch_it(t_info *info)
 	i = -1;
 	while (++i < info->nb_philo)
 	{
-		if (i % 2 != 0)
+		if (i % 2 != 0 /*&& i != info->nb_philo - 1*/)
 		{
 			if (pthread_create(info->thread_philo[i], NULL, start_routine, \
 						info->philo[i]) != 0)
 				return (free_fun(info), 1);
 		}
 	}
+//	if (pthread_create(info->thread_philo[info->nb_philo - 1], NULL, start_routine, \
+//				info->philo[info->nb_philo - 1]) != 0)
+//		return (free_fun(info), 1);
 	return (0);
 }
 
@@ -108,6 +111,8 @@ int	main(int argc, char **argv)
 
 	i = -1;
 	info.reaper = &reaper;
+	if (pthread_mutex_init(&info.writing, NULL) != 0)
+		return (1);
 	if (check_arg(argc, argv, &info) == 1)
 		return (1);
 	if (init_muthread(&info) == 1)

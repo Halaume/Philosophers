@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 13:44:36 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/18 16:59:59 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/19 11:17:16 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	destroy_mut(t_info *info)
 	int	i;
 
 	i = 0;
+	pthread_mutex_destroy(&info->writing);
 	if (info->reaper->scythe)
 		pthread_mutex_destroy(info->reaper->scythe);
 	while (i < info->nb_philo)

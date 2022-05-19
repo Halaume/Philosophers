@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:00:51 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/18 16:53:33 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/19 11:04:18 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_info
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
+	pthread_mutex_t	writing;
 	pthread_mutex_t	**fork;
 }	t_info;
 
@@ -52,6 +53,7 @@ typedef struct s_philo
 	int				**fork_lock;
 	int				*is_dead;
 	struct s_reaper	**reaper;
+	pthread_mutex_t	*writing;
 	pthread_mutex_t	***fork;
 }	t_philo;
 
@@ -78,6 +80,11 @@ void				take_fork(t_philo *philo);
 
 void				*reaper(void *start);
 void				wipe_all(t_info *info);
+
+//						PRINT
+
+void				ft_putnbr(unsigned long long nb);
+void				ft_putstr(char *str, t_philo *philo);
 
 //						FREE
 

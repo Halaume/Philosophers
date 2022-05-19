@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 17:08:05 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/18 16:57:37 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/19 11:12:52 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	init_this_philo(t_info *info, t_philo *philo, int nb)
 	philo->nb_philo = info->nb_philo;
 	philo->fork = &info->fork;
 	philo->nb_of_eat = info->nb_of_eat;
+	philo->writing = &info->writing;
 }
 
 unsigned long long	get_now(t_philo *philo)
@@ -55,39 +56,39 @@ void	is_sleeping(t_philo *philo)
 {
 	if (is_dead(philo, *philo->reaper) == 1)
 		return ;
-	printf("%llu %d is sleeping\n", get_now(philo), philo->nb);
+	ft_putstr("is sleeping\n", philo);
 	sleeping(philo->time_to_sleep);
 	if (*philo->is_dead == 1)
 		return ;
-	printf("%llu %d is thinking\n", get_now(philo), philo->nb);
+	ft_putstr("is thinking\n", philo);
 }
 
 void	unlock_fork(t_philo *philo)
 {
 	if (philo->nb != philo->nb_philo)
 	{
-		if (*philo->fork_lock[philo->nb - 1] == 1)
+		if (philo->fork_lock[0][philo->nb - 1] == 1)
 		{
-			pthread_mutex_unlock(*philo->fork[philo->nb - 1]);
-			philo->fork_lock[philo->nb - 1] = 0;
+			pthread_mutex_unlock(philo->fork[0][philo->nb - 1]);
+			philo->fork_lock[0][philo->nb - 1] = 0;
 		}
-		if (*philo->fork_lock[philo->nb] == 1)
+		if (philo->fork_lock[0][philo->nb] == 1)
 		{
-			pthread_mutex_unlock(*philo->fork[philo->nb]);
-			*philo->fork_lock[philo->nb] = 0;
+			pthread_mutex_unlock(philo->fork[0][philo->nb]);
+			philo->fork_lock[0][philo->nb] = 0;
 		}
 	}
 	else
 	{
-		if (*philo->fork_lock[0] == 1)
+		if (philo->fork_lock[0][0] == 1)
 		{
-			pthread_mutex_unlock(*philo->fork[0]);
-			*philo->fork_lock[0] = 0;
+			pthread_mutex_unlock(philo->fork[0][0]);
+			philo->fork_lock[0][0] = 0;
 		}
-		if (*philo->fork_lock[philo->nb - 1] == 1)
+		if (philo->fork_lock[0][philo->nb - 1] == 1)
 		{
-			pthread_mutex_unlock(*philo->fork[philo->nb - 1]);
-			*philo->fork_lock[philo->nb - 1] = 0;
+			pthread_mutex_unlock(philo->fork[0][philo->nb - 1]);
+			philo->fork_lock[0][philo->nb - 1] = 0;
 		}
 	}
 }

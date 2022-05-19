@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 13:51:49 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/18 17:08:40 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/19 11:12:52 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	eating(t_philo *philo)
 {
 	if (is_dead(philo, *philo->reaper) == 1)
 		return ;
-	printf("%llu %d is eating\n", get_now(philo), philo->nb);
+	ft_putstr("is eating\n", philo);
 	philo->nb_eat++;
 	philo->last_time_eat = get_now(philo);
 	sleeping(philo->time_to_eat);
@@ -28,36 +28,36 @@ int	took_fork(t_philo *philo)
 {
 	if (philo->nb % 2 == 0)
 	{
-		pthread_mutex_lock(*philo->fork[philo->nb - 1]);
-		*philo->fork_lock[philo->nb - 1] = 1;
+		pthread_mutex_lock(philo->fork[0][philo->nb - 1]);
+		philo->fork_lock[0][philo->nb - 1] = 1;
 		if (is_dead(philo, *philo->reaper) == 1)
 			return (1);
-		printf("%llu %d has taken a fork\n", get_now(philo), philo->nb);
-		pthread_mutex_lock(*philo->fork[philo->nb]);
-		*philo->fork_lock[philo->nb] = 1;
+		ft_putstr("has taken a fork\n", philo);
+		pthread_mutex_lock(philo->fork[0][philo->nb]);
+		philo->fork_lock[0][philo->nb] = 1;
 		if (is_dead(philo, *philo->reaper) == 1)
 			return (1);
-		printf("%llu %d has taken a fork\n", get_now(philo), philo->nb);
+		ft_putstr("has taken a fork\n", philo);
 	}
 	else
 	{
-		pthread_mutex_lock(*philo->fork[philo->nb]);
-		*philo->fork_lock[philo->nb] = 1;
+		pthread_mutex_lock(philo->fork[0][philo->nb]);
+		philo->fork_lock[0][philo->nb] = 1;
 		if (is_dead(philo, *philo->reaper) == 1)
-			return (pthread_mutex_unlock(*philo->fork[philo->nb]), 1);
-		printf("%llu %d has taken a fork\n", get_now(philo), philo->nb);
-		pthread_mutex_lock(*philo->fork[philo->nb - 1]);
-		*philo->fork_lock[philo->nb - 1] = 1;
+			return (pthread_mutex_unlock(philo->fork[0][philo->nb]), 1);
+		ft_putstr("has taken a fork\n", philo);
+		pthread_mutex_lock(philo->fork[0][philo->nb - 1]);
+		philo->fork_lock[0][philo->nb - 1] = 1;
 		if (is_dead(philo, *philo->reaper) == 1)
-			return (pthread_mutex_lock(*philo->fork[philo->nb - 1]), 1);
-		printf("%llu %d has taken a fork\n", get_now(philo), philo->nb);
+			return (pthread_mutex_lock(philo->fork[0][philo->nb - 1]), 1);
+		ft_putstr("has taken a fork\n", philo);
 	}
 	return (0);
 }
 
 void	take_fork(t_philo *philo)
 {
-		if (is_dead(philo, *philo->reaper) == 1)
+	if (is_dead(philo, *philo->reaper) == 1)
 		return ;
 	if (philo->nb != philo->nb_philo)
 	{
@@ -66,20 +66,20 @@ void	take_fork(t_philo *philo)
 	}
 	else
 	{
-		pthread_mutex_lock(*philo->fork[0]);
+		pthread_mutex_lock(philo->fork[0][0]);
 		if (is_dead(philo, *philo->reaper) == 1)
 		{
-			pthread_mutex_unlock(*philo->fork[0]);
+			pthread_mutex_unlock(philo->fork[0][0]);
 			return ;
 		}
-		printf("%llu %d has taken a fork\n", get_now(philo), philo->nb);
-		pthread_mutex_lock(*philo->fork[philo->nb - 1]);
+		ft_putstr("has taken a fork\n", philo);
+		pthread_mutex_lock(philo->fork[0][philo->nb - 1]);
 		if (is_dead(philo, *philo->reaper) == 1)
 		{
-			pthread_mutex_unlock(*philo->fork[philo->nb - 1]);
+			pthread_mutex_unlock(philo->fork[0][philo->nb - 1]);
 			return ;
 		}
-		printf("%llu %d has taken a fork\n", get_now(philo), philo->nb);
+		ft_putstr("has taken a fork\n", philo);
 	}
 	eating(philo);
 }
