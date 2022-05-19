@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:07:48 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/19 11:19:46 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/19 11:56:05 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,17 +89,10 @@ int	launch_it(t_info *info)
 
 int	init_muthread(t_info *info)
 {
-	int	i;
-
-	i = 0;
 	if (malloc_all(info) == 1)
 		return (1);
-	while (i < info->nb_philo)
-	{
-		if (launch_it(info) == 1)
-			return (1);
-		i++;
-	}
+	if (launch_it(info) == 1)
+		return (1);
 	return (0);
 }
 

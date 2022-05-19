@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 13:44:36 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/19 11:17:16 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/19 12:09:07 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,6 @@ void	destroy_mut(t_info *info)
 	{
 		if (info->fork[i])
 			pthread_mutex_destroy(info->fork[i]);
+		i++;
 	}
 }

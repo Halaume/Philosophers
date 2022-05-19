@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 17:13:44 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/19 11:12:14 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/19 12:06:04 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	is_dead(t_philo *philo, t_reaper *reaper)
 {
 
 	pthread_mutex_lock(reaper->scythe);
-	if (*philo->is_dead == 1)
+	if (*(philo->is_dead) == 1)
 		return (pthread_mutex_unlock(reaper->scythe), 1);
 	pthread_mutex_unlock(reaper->scythe);
 	return (0);
@@ -44,10 +44,6 @@ void	wipe_all(t_info *info)
 	i = -1;
 	pthread_mutex_lock(info->reaper->scythe);
 	info->is_dead = 1;
-	while (++i < info->nb_philo)
-	{
-		unlock_fork(info->philo[i]);
-	}
 	pthread_mutex_unlock(info->reaper->scythe);
 }
 
@@ -71,7 +67,7 @@ void	*reaper(void *start)
 	i = 0;
 	while (1)
 	{
-		if (have_all_eat(reaper->info))
+		if (!have_all_eat(reaper->info))
 			return (reaper);
 		if (get_now_reaper(reaper->info) - \
 				reaper->info->philo[i]->last_time_eat > \

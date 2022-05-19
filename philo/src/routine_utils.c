@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 17:08:05 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/19 11:12:52 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/19 11:49:35 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	is_sleeping(t_philo *philo)
 		return ;
 	ft_putstr("is sleeping\n", philo);
 	sleeping(philo->time_to_sleep);
-	if (*philo->is_dead == 1)
+	if (is_dead(philo, *philo->reaper) == 1)
 		return ;
 	ft_putstr("is thinking\n", philo);
 }
