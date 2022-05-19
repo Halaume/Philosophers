@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:07:48 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/19 11:56:05 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/19 14:04:17 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	init_reaper(t_info *info)
 		return (free_fun(info), 1);
 	if (pthread_create(&info->reaper->my_reaper, NULL, reaper, info->reaper) != 0)
 		return (free_fun(info), 1);
-	pthread_detach(info->reaper->my_reaper);
+//	pthread_detach(info->reaper->my_reaper);
 	return (0);
 }
 
@@ -112,6 +112,7 @@ int	main(int argc, char **argv)
 		return (1);
 	while (++i < info.nb_philo)
 		pthread_join(*info.thread_philo[i], NULL);
+	pthread_join(info.reaper->my_reaper, NULL);
 	destroy_mut(&info);
 	free_fun(&info);
 	return (0);
