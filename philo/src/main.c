@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:07:48 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/19 14:04:17 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/19 14:51:55 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,7 @@
 int	init_reaper(t_info *info)
 {
 	info->reaper->info = info;
-	info->reaper->scythe = malloc(sizeof(pthread_mutex_t) * 1);
-	if (!info->reaper->scythe)
-		return (free_fun(info), 1);
-	if (pthread_mutex_init(info->reaper->scythe, NULL) != 0)
+	if (pthread_mutex_init(&info->reaper->scythe, NULL) != 0)
 		return (free_fun(info), 1);
 	if (pthread_create(&info->reaper->my_reaper, NULL, reaper, info->reaper) != 0)
 		return (free_fun(info), 1);

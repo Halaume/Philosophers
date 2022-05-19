@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:00:51 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/19 14:11:55 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/19 14:51:34 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ typedef struct s_reaper
 {
 	t_info			*info;
 	pthread_t		my_reaper;
-	pthread_mutex_t	*scythe;
+	pthread_mutex_t	scythe;
 }	t_reaper;
 
 //						INIT
