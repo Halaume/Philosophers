@@ -6,7 +6,7 @@
 #    By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/15 13:44:31 by ghanquer          #+#    #+#              #
-#    Updated: 2022/05/19 17:50:50 by ghanquer         ###   ########.fr        #
+#    Updated: 2022/05/20 16:56:02 by ghanquer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,9 @@ SRC_FT = 	free_func \
 			routine_utils \
 			check_arg \
 			ft_putstr \
-			ulltoa
+			ulltoa \
+			norme \
+			routine_tools
 
 all: $(NAME)
 

@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:00:51 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/19 17:37:16 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/20 16:55:03 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ typedef struct s_reaper
 
 int					check_arg(int argc, char **argv, t_info *info);
 void				init_this_philo(t_info *info, t_philo *philo, int nb);
+int					init_reaper(t_info *info);
+int					malloc_all(t_info *info);
 
 //						ROUTINE
 
@@ -75,6 +77,7 @@ void				*start_routine(void *mon_thread);
 void				sleeping(useconds_t time);
 void				is_sleeping(t_philo *philo);
 void				take_fork(t_philo *philo);
+void				eating(t_philo *philo);
 
 //						REAPER
 

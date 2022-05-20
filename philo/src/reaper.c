@@ -6,37 +6,11 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 17:13:44 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/20 12:46:16 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/20 16:55:07 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
-
-int	is_dead(t_philo *philo, t_reaper *reaper)
-{
-	pthread_mutex_lock(&reaper->scythe);
-	if (philo->is_dead[0] == 1)
-		return (pthread_mutex_unlock(&reaper->scythe), 1);
-	pthread_mutex_unlock(&reaper->scythe);
-	return (0);
-}
-
-int	have_all_eat(t_info *info, t_reaper *reaper)
-{
-	int	i;
-
-	i = -1;
-	if (info->nb_of_eat < 0)
-		return (1);
-	pthread_mutex_lock(&reaper->scythe);
-	while (++i < info->nb_philo && info->philo[i])
-	{
-		if (info->philo[i]->nb_eat < info->nb_of_eat)
-			return (pthread_mutex_unlock(&reaper->scythe), 1);
-	}
-	pthread_mutex_unlock(&reaper->scythe);
-	return (0);
-}
 
 void	wipe_all(t_info *info)
 {

@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:07:48 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/20 12:52:31 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/20 16:54:25 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,62 +23,29 @@ int	init_reaper(t_info *info)
 	return (0);
 }
 
-int	malloc_all(t_info *info)
-{
-	int	i;
-
-	i = -1;
-	info->is_dead = 0;
-	info->thread_philo = malloc(sizeof(pthread_t *) * info->nb_philo);
-	info->fork = malloc(sizeof(pthread_mutex_t *) * info->nb_philo);
-	info->philo = malloc(sizeof(t_philo *) * info->nb_philo);
-	info->fork_lock = malloc(sizeof(int) * info->nb_philo);
-	if (!info->fork || !info->thread_philo || !info->philo || !info->nb_philo)
-		return (free_fun(info), 1);
-	while (++i < info->nb_philo)
-	{
-		info->fork_lock[i] = 0;
-		info->fork[i] = malloc(sizeof(pthread_mutex_t) * 1);
-		info->thread_philo[i] = malloc(sizeof(pthread_t) * 1);
-		info->philo[i] = malloc(sizeof(t_philo) * 1);
-		if (!info->fork[i] || !info->thread_philo[i] || !info->philo[i])
-			return (free_fun(info), 1);
-		init_this_philo(info, info->philo[i], i + 1);
-		if (pthread_mutex_init(info->fork[i], NULL) != 0)
-			return (free_fun(info), 1);
-	}
-	if (init_reaper(info) == 1)
-		return (1);
-	return (0);
-}
-
 int	launch_it_odd(t_info *info)
 {
 	int	i;
 
-	i = -1;
-	while (++i < info->nb_philo)
+	i = 0;
+	while (i < (info->nb_philo - 1))
 	{
-		if (i % 2 == 0 && i != info->nb_philo - 1)
-		{
-			if (pthread_create(info->thread_philo[i], NULL, start_routine, \
-						info->philo[i]) != 0)
-				return (free_fun(info), 1);
-		}
+		if (pthread_create(info->thread_philo[i], NULL, start_routine, \
+					info->philo[i]) != 0)
+			return (free_fun(info), 1);
+		i += 2;
 	}
 	sleeping(info->time_to_eat / 2);
 	if (pthread_create(info->thread_philo[info->nb_philo - 1], NULL, \
 				start_routine, info->philo[info->nb_philo - 1]) != 0)
 		return (free_fun(info), 1);
-	i = -1;
-	while (++i < info->nb_philo)
+	i = 1;
+	while (i < info->nb_philo)
 	{
-		if (i % 2 != 0 && i != info->nb_philo - 1)
-		{
-			if (pthread_create(info->thread_philo[i], NULL, start_routine, \
-						info->philo[i]) != 0)
-				return (free_fun(info), 1);
-		}
+		if (pthread_create(info->thread_philo[i], NULL, start_routine, \
+					info->philo[i]) != 0)
+			return (free_fun(info), 1);
+		i += 2;
 	}
 	return (0);
 }
