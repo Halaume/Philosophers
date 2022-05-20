@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:07:48 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/20 12:46:51 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/20 12:52:31 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	malloc_all(t_info *info)
 {
 	int	i;
 
-	i = 0;
+	i = -1;
 	info->is_dead = 0;
 	info->thread_philo = malloc(sizeof(pthread_t *) * info->nb_philo);
 	info->fork = malloc(sizeof(pthread_mutex_t *) * info->nb_philo);
@@ -35,7 +35,7 @@ int	malloc_all(t_info *info)
 	info->fork_lock = malloc(sizeof(int) * info->nb_philo);
 	if (!info->fork || !info->thread_philo || !info->philo || !info->nb_philo)
 		return (free_fun(info), 1);
-	while (i < info->nb_philo)
+	while (++i < info->nb_philo)
 	{
 		info->fork_lock[i] = 0;
 		info->fork[i] = malloc(sizeof(pthread_mutex_t) * 1);
@@ -46,7 +46,6 @@ int	malloc_all(t_info *info)
 		init_this_philo(info, info->philo[i], i + 1);
 		if (pthread_mutex_init(info->fork[i], NULL) != 0)
 			return (free_fun(info), 1);
-		i++;
 	}
 	if (init_reaper(info) == 1)
 		return (1);
