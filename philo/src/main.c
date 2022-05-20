@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:07:48 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/20 12:32:24 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/20 12:46:51 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int	init_reaper(t_info *info)
 	info->reaper->info = info;
 	if (pthread_mutex_init(&info->reaper->scythe, NULL) != 0)
 		return (free_fun(info), 1);
-	if (pthread_create(&info->reaper->my_reaper, NULL, reaper, info->reaper) != 0)
+	if (pthread_create(&info->reaper->my_reaper, NULL, reaper, info->reaper) \
+			!= 0)
 		return (free_fun(info), 1);
-//	pthread_detach(info->reaper->my_reaper);
 	return (0);
 }
 
@@ -68,8 +68,8 @@ int	launch_it_odd(t_info *info)
 		}
 	}
 	sleeping(info->time_to_eat / 2);
-	if (pthread_create(info->thread_philo[info->nb_philo - 1], NULL, start_routine, \
-				info->philo[info->nb_philo - 1]) != 0)
+	if (pthread_create(info->thread_philo[info->nb_philo - 1], NULL, \
+				start_routine, info->philo[info->nb_philo - 1]) != 0)
 		return (free_fun(info), 1);
 	i = -1;
 	while (++i < info->nb_philo)
