@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:07:48 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/19 17:45:30 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/20 12:32:24 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	malloc_all(t_info *info)
 	int	i;
 
 	i = 0;
+	info->is_dead = 0;
 	info->thread_philo = malloc(sizeof(pthread_t *) * info->nb_philo);
 	info->fork = malloc(sizeof(pthread_mutex_t *) * info->nb_philo);
 	info->philo = malloc(sizeof(t_philo *) * info->nb_philo);
@@ -52,35 +53,62 @@ int	malloc_all(t_info *info)
 	return (0);
 }
 
+int	launch_it_odd(t_info *info)
+{
+	int	i;
+
+	i = -1;
+	while (++i < info->nb_philo)
+	{
+		if (i % 2 == 0 && i != info->nb_philo - 1)
+		{
+			if (pthread_create(info->thread_philo[i], NULL, start_routine, \
+						info->philo[i]) != 0)
+				return (free_fun(info), 1);
+		}
+	}
+	sleeping(info->time_to_eat / 2);
+	if (pthread_create(info->thread_philo[info->nb_philo - 1], NULL, start_routine, \
+				info->philo[info->nb_philo - 1]) != 0)
+		return (free_fun(info), 1);
+	i = -1;
+	while (++i < info->nb_philo)
+	{
+		if (i % 2 != 0 && i != info->nb_philo - 1)
+		{
+			if (pthread_create(info->thread_philo[i], NULL, start_routine, \
+						info->philo[i]) != 0)
+				return (free_fun(info), 1);
+		}
+	}
+	return (0);
+}
+
 int	launch_it(t_info *info)
 {
 	int	i;
 
 	i = -1;
-	info->is_dead = 0;
 	while (++i < info->nb_philo)
 	{
-		if (i % 2 == 0 /*&& i != info->nb_philo - 1*/)
+		if (i % 2 == 0)
 		{
 			if (pthread_create(info->thread_philo[i], NULL, start_routine, \
 						info->philo[i]) != 0)
 				return (free_fun(info), 1);
 		}
 	}
-	sleeping(info->time_to_eat);
+	sleeping(info->time_to_eat / 2);
 	i = -1;
 	while (++i < info->nb_philo)
 	{
-		if (i % 2 != 0 /*&& i != info->nb_philo - 1*/)
+		if (i % 2 != 0)
 		{
 			if (pthread_create(info->thread_philo[i], NULL, start_routine, \
 						info->philo[i]) != 0)
 				return (free_fun(info), 1);
 		}
 	}
-//	if (pthread_create(info->thread_philo[info->nb_philo - 1], NULL, start_routine, \
-//				info->philo[info->nb_philo - 1]) != 0)
-//		return (free_fun(info), 1);
 	return (0);
 }
 
@@ -88,8 +116,16 @@ int	init_muthread(t_info *info)
 {
 	if (malloc_all(info) == 1)
 		return (1);
-	if (launch_it(info) == 1)
-		return (1);
+	if (info->nb_philo % 2 == 0)
+	{
+		if (launch_it(info) == 1)
+			return (1);
+	}
+	else
+	{
+		if (launch_it_odd(info) == 1)
+			return (1);
+	}
 	return (0);
 }
 
@@ -110,7 +146,6 @@ int	main(int argc, char **argv)
 	while (++i < info.nb_philo)
 		pthread_join(*info.thread_philo[i], NULL);
 	pthread_join(info.reaper->my_reaper, NULL);
-	destroy_mut(&info);
 	free_fun(&info);
 	return (0);
 }

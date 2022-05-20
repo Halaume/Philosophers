@@ -6,17 +6,33 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 13:44:36 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/19 14:53:30 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/20 12:28:43 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
+
+void	destroy_mut(t_info *info)
+{
+	int	i;
+
+	i = 0;
+	pthread_mutex_destroy(&info->reaper->scythe);
+	while (i < info->nb_philo)
+	{
+		if (info->fork[i])
+			pthread_mutex_destroy(info->fork[i]);
+		i++;
+	}
+	pthread_mutex_destroy(&info->writing);
+}
 
 void	free_fun(t_info *info)
 {
 	int	i;
 
 	i = 0;
+	destroy_mut(info);
 	while (i < info->nb_philo)
 	{
 		if (info->thread_philo[i])
@@ -35,19 +51,4 @@ void	free_fun(t_info *info)
 		free(info->philo);
 	if (info->thread_philo)
 		free(info->thread_philo);
-}
-
-void	destroy_mut(t_info *info)
-{
-	int	i;
-
-	i = 0;
-	pthread_mutex_destroy(&info->reaper->scythe);
-	while (i < info->nb_philo)
-	{
-		if (info->fork[i])
-			pthread_mutex_destroy(info->fork[i]);
-		i++;
-	}
-	pthread_mutex_destroy(&info->writing);
 }

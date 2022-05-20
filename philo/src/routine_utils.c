@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 17:08:05 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/19 17:57:46 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/20 11:49:17 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,15 +93,31 @@ void	unlock_fork(t_philo *philo)
 	}
 	else if (philo->nb == philo->nb_philo)
 	{
-		if (philo->fork_lock[0][0] == 1)
+		if (philo->nb % 2 != 0)
 		{
-			philo->fork_lock[0][0] = 0;
-			pthread_mutex_unlock(philo->fork[0][0]);
+			if (philo->fork_lock[0][philo->nb - 1] == 1)
+			{
+				philo->fork_lock[0][philo->nb - 1] = 0;
+				pthread_mutex_unlock(philo->fork[0][philo->nb - 1]);
+			}
+			if (philo->fork_lock[0][0] == 1)
+			{
+				philo->fork_lock[0][0] = 0;
+				pthread_mutex_unlock(philo->fork[0][0]);
+			}
 		}
-		if (philo->fork_lock[0][philo->nb - 1] == 1)
+		else
 		{
-			philo->fork_lock[0][philo->nb - 1] = 0;
-			pthread_mutex_unlock(philo->fork[0][philo->nb - 1]);
+			if (philo->fork_lock[0][0] == 1)
+			{
+				philo->fork_lock[0][0] = 0;
+				pthread_mutex_unlock(philo->fork[0][0]);
+			}
+			if (philo->fork_lock[0][philo->nb - 1] == 1)
+			{
+				philo->fork_lock[0][philo->nb - 1] = 0;
+				pthread_mutex_unlock(philo->fork[0][philo->nb - 1]);
+			}
 		}
 	}
 }

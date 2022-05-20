@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 13:51:49 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/19 17:36:48 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/20 11:49:10 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,45 @@ int	took_fork(t_philo *philo)
 	return (0);
 }
 
+int	took_last_fork(t_philo *philo)
+{
+	if (philo->nb % 2 != 0)
+	{
+		pthread_mutex_lock(philo->fork[0][philo->nb - 1]);
+		philo->fork_lock[0][philo->nb - 1] = 1;
+		if (ft_putstr("has taken a fork\n", philo) == 1)
+		{
+			unlock_fork(philo);
+			return (1);
+		}
+		pthread_mutex_lock(philo->fork[0][0]);
+		philo->fork_lock[0][0] = 1;
+		if (ft_putstr("has taken a fork\n", philo) == 1)
+		{
+			unlock_fork(philo);
+			return (1);
+		}
+	}
+	else
+	{
+		pthread_mutex_lock(philo->fork[0][0]);
+		philo->fork_lock[0][0] = 1;
+		if (ft_putstr("has taken a fork\n", philo) == 1)
+		{
+			unlock_fork(philo);
+			return (1);
+		}
+		pthread_mutex_lock(philo->fork[0][philo->nb - 1]);
+		philo->fork_lock[0][philo->nb - 1] = 1;
+		if (ft_putstr("has taken a fork\n", philo) == 1)
+		{
+			unlock_fork(philo);
+			return (1);
+		}
+	}
+	return (0);
+}
+
 void	take_fork(t_philo *philo)
 {
 	if (is_dead(philo, *philo->reaper) == 1)
@@ -64,20 +103,8 @@ void	take_fork(t_philo *philo)
 	}
 	else
 	{
-		pthread_mutex_lock(philo->fork[0][0]);
-		philo->fork_lock[0][0] = 1;
-		if (ft_putstr("has taken a fork\n", philo) == 1)
-		{
-			unlock_fork(philo);
+		if (took_last_fork(philo) == 1)
 			return ;
-		}
-		pthread_mutex_lock(philo->fork[0][philo->nb - 1]);
-		philo->fork_lock[0][philo->nb - 1] = 1;
-		if (ft_putstr("has taken a fork\n", philo) == 1)
-		{
-			unlock_fork(philo);
-			return ;
-		}
 	}
 	eating(philo);
 }

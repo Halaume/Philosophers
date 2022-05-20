@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 10:51:13 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/19 14:31:40 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/20 11:51:36 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ int	ft_putstr(char *str, t_philo *philo)
 {
 	int	i;
 
-	if (!str || !*str)
-		return (1);
 	pthread_mutex_lock(philo->writing);
+	if (!str || !*str)
+		return (pthread_mutex_unlock(philo->writing), 1);
 	if (is_dead(philo, *philo->reaper) == 1)
 		return (pthread_mutex_unlock(philo->writing), 1);
 	ft_putnbr(get_now(philo));
