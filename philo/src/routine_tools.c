@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 16:51:00 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/20 16:52:34 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/25 14:57:14 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,23 +54,22 @@ void	sleeping(useconds_t time)
 
 void	is_sleeping(t_philo *philo)
 {
-	if (is_dead(philo, *philo->reaper) == 1)
+	if (ft_putstr("is sleeping\n", philo) == 1)
 		return ;
-	ft_putstr("is sleeping\n", philo);
 	sleeping(philo->time_to_sleep);
 	if (is_dead(philo, *philo->reaper) == 1)
 		return ;
-	ft_putstr("is thinking\n", philo);
+	if (ft_putstr("is thinking\n", philo) == 1)
+		return ;
 }
 
 void	eating(t_philo *philo)
 {
-	if (is_dead(philo, *philo->reaper) == 1)
+	if (ft_putstr("is eating\n", philo) == 1)
 	{
 		unlock_fork(philo);
 		return ;
 	}
-	ft_putstr("is eating\n", philo);
 	set_last_eat(philo, *philo->reaper);
 	sleeping(philo->time_to_eat);
 	unlock_fork(philo);

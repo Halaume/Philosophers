@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 17:13:44 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/20 16:55:07 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/25 11:42:41 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	*reaper(void *start)
 				get_last_eat(reaper->info->philo[i], reaper) > \
 				(unsigned long long)reaper->info->time_to_die)
 		{
+			sleeping(1);
 			ft_putstr("has died\n", reaper->info->philo[i]);
 			wipe_all(reaper->info);
 			return (reaper);

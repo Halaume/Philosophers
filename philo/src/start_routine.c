@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 13:51:49 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/20 16:52:39 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/25 15:12:01 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	took_last_fork2(t_philo *philo)
 		unlock_fork(philo);
 		return (1);
 	}
-	pthread_mutex_lock(philo->fork[0][0]);
+	pthread_mutex_lock(philo->fork[-1][0]);
 	philo->fork_lock[0][0] = 1;
 	if (ft_putstr("has taken a fork\n", philo) == 1)
 	{

@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 17:20:10 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/18 11:59:23 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/05/24 19:00:34 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	check_arg(int argc, char **argv, t_info *info)
 	if (argc == 6)
 	{
 		info->nb_of_eat = ft_atoi(argv[5]);
-		if (info->nb_of_eat < 0)
+		if (info->nb_of_eat <= 0)
 			return (1);
 	}
 	else
