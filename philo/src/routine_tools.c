@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 16:51:00 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/25 14:57:14 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/06/07 14:23:14 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	init_this_philo(t_info *info, t_philo *philo, int nb)
 	philo->fork = &info->fork;
 	philo->nb_of_eat = info->nb_of_eat;
 	philo->writing = &info->writing;
+	philo->check_fork = &info->check_fork;
 }
 
 unsigned long long	get_now(t_philo *philo)

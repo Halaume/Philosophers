@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:07:48 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/24 18:54:34 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/06/07 15:20:35 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	launch_it_odd(t_info *info)
 	int	i;
 
 	i = 0;
-	while (i < (info->nb_philo))
+	while (i < info->nb_philo)
 	{
 		if (i != info->nb_philo - 3)
 		{
@@ -38,10 +38,11 @@ int	launch_it_odd(t_info *info)
 		}
 		i += 2;
 	}
-	sleeping(info->time_to_eat / 2);
+	sleeping(info->time_to_eat / 2 - 10);
 	if (pthread_create(info->thread_philo[info->nb_philo - 3], NULL, \
 				start_routine, info->philo[info->nb_philo - 3]) != 0)
 		return (free_fun(info), 1);
+	sleeping(info->time_to_eat / 4);
 	i = 1;
 	while (i < info->nb_philo)
 	{

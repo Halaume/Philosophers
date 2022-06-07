@@ -6,7 +6,7 @@
 #    By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/15 13:44:31 by ghanquer          #+#    #+#              #
-#    Updated: 2022/05/20 16:56:02 by ghanquer         ###   ########.fr        #
+#    Updated: 2022/06/07 11:45:54 by ghanquer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ CC = clang $(CFLAGS)
 
 RM = rm -fr
 
-CFLAGS = -Wall -Wextra -Werror -pthread -Iinc/philo.h #-g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -pthread -Iinc/philo.h -g #3 -fsanitize=address
 
 .c.o:
 	$(CC) -c $< -o $(<:.c=.o)

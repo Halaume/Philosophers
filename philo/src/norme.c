@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 16:53:28 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/20 16:54:21 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/06/07 18:11:55 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	malloc_all(t_info *info)
 	info->is_dead = 0;
 	info->thread_philo = malloc(sizeof(pthread_t *) * info->nb_philo);
 	info->fork = malloc(sizeof(pthread_mutex_t *) * info->nb_philo);
+//	info->check_fork = malloc(sizeof(pthread_mutex_t *) * info->nb_philo);
 	info->philo = malloc(sizeof(t_philo *) * info->nb_philo);
 	info->fork_lock = malloc(sizeof(int) * info->nb_philo);
 	if (!info->fork || !info->thread_philo || !info->philo || !info->nb_philo)
@@ -54,6 +55,7 @@ int	malloc_all(t_info *info)
 	{
 		info->fork_lock[i] = 0;
 		info->fork[i] = malloc(sizeof(pthread_mutex_t) * 1);
+//		info->check_fork[i] = malloc(sizeof(pthread_mutex_t) * 1);
 		info->thread_philo[i] = malloc(sizeof(pthread_t) * 1);
 		info->philo[i] = malloc(sizeof(t_philo) * 1);
 		if (!info->fork[i] || !info->thread_philo[i] || !info->philo[i])
@@ -61,6 +63,8 @@ int	malloc_all(t_info *info)
 		init_this_philo(info, info->philo[i], i + 1);
 		if (pthread_mutex_init(info->fork[i], NULL) != 0)
 			return (free_fun(info), 1);
+//		if (pthread_mutex_init(info->check_fork[i], NULL) != 0)
+//			return (free_fun(info), 1);
 	}
 	if (init_reaper(info) == 1)
 		return (1);

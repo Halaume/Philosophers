@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:00:51 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/20 16:55:03 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/06/07 15:18:42 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_info
 	int				time_to_sleep;
 	pthread_mutex_t	writing;
 	pthread_mutex_t	**fork;
+	pthread_mutex_t	**check_fork;
 }	t_info;
 
 typedef struct s_philo
@@ -54,6 +55,7 @@ typedef struct s_philo
 	int				*is_dead;
 	struct s_reaper	**reaper;
 	pthread_mutex_t	*writing;
+	pthread_mutex_t	***check_fork;
 	pthread_mutex_t	***fork;
 }	t_philo;
 
