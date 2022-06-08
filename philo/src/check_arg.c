@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 17:20:10 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/24 19:00:34 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/06/08 12:03:48 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	double_check(t_info *info)
 	info->philo = NULL;
 	info->thread_philo = NULL;
 	info->fork = NULL;
-	info->fork_lock = NULL;
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 16:51:00 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/06/07 14:23:14 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/06/08 11:49:23 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ void	init_this_philo(t_info *info, t_philo *philo, int nb)
 	philo->time_to_die = info->time_to_die;
 	philo->time_to_eat = info->time_to_eat;
 	philo->time_to_sleep = info->time_to_sleep;
-	philo->fork_lock = &info->fork_lock;
 	philo->reaper = &info->reaper;
 	philo->nb_philo = info->nb_philo;
 	philo->fork = &info->fork;
 	philo->nb_of_eat = info->nb_of_eat;
 	philo->writing = &info->writing;
-	philo->check_fork = &info->check_fork;
+	philo->fork_left = 0;
+	philo->fork_right = 0;
 }
 
 unsigned long long	get_now(t_philo *philo)

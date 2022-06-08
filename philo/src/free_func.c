@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 13:44:36 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/06/07 18:11:57 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/06/08 12:00:57 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,12 @@ void	free_fun(t_info *info)
 			free(info->thread_philo[i]);
 		if (info->fork[i])
 			free(info->fork[i]);
-//		if (info->check_fork[i])
-//			free(info->check_fork[i]);
 		if (info->philo[i])
 			free(info->philo[i]);
 		i++;
 	}
 	if (info->fork)
 		free(info->fork);
-	if (info->fork_lock)
-		free(info->fork_lock);
 	if (info->philo)
 		free(info->philo);
 	if (info->thread_philo)
