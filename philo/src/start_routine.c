@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 13:51:49 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/06/08 12:40:12 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/06/08 16:37:23 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,13 +113,6 @@ void	*start_routine(void *start)
 	t_philo	*philo;
 
 	philo = (t_philo *)start;
-//	if (philo->nb_philo % 2 == 1)
-//	{
-//		if (philo->nb == philo->nb_philo - 2)
-//			sleeping(philo->time_to_eat / 2);
-//	}
-//	if (philo->nb % 2 == 0)
-//		sleeping(philo->time_to_eat / 2 + 10);
 	while (1)
 	{
 		if (is_dead(philo, *philo->reaper) == 1)

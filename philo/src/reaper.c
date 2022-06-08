@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 17:13:44 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/06/08 12:15:30 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/06/08 16:43:48 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,17 @@ unsigned long long	get_now_reaper(t_info *info)
 void	set_last_eat(t_philo *philo, t_reaper *reaper)
 {
 	pthread_mutex_lock(&reaper->scythe);
-	philo->nb_eat++;
 	philo->last_time_eat = get_now(philo);
+	philo->nb_eat++;
 	pthread_mutex_unlock(&reaper->scythe);
 }
 
 unsigned long long	get_last_eat(t_philo *philo, t_reaper *reaper)
 {
+	(void)reaper;
 	unsigned long long	ret;
 
-	pthread_mutex_lock(&reaper->scythe);
 	ret = philo->last_time_eat;
-	pthread_mutex_unlock(&reaper->scythe);
 	return (ret);
 }
 
@@ -57,17 +56,22 @@ void	*reaper(void *start)
 	i = 0;
 	while (1)
 	{
-		if (have_all_eat(reaper->info, reaper) == 0)
+		pthread_mutex_lock(&reaper->scythe);
+		if (have_all_eat(reaper->info) == 0)
 			return (wipe_all(reaper->info), NULL);
 		if (get_now_reaper(reaper->info) - \
 				get_last_eat(reaper->info->philo[i], reaper) > \
-				(unsigned long long)reaper->info->time_to_die)
+				(unsigned long long)reaper->info->time_to_die + 1)
 		{
+			pthread_mutex_unlock(&reaper->scythe);
 			sleeping(1);
 			ft_putstr("has died\n", reaper->info->philo[i]);
-			wipe_all(reaper->info);
+			pthread_mutex_lock(&reaper->scythe);
+			reaper->info->is_dead = 1;
+			pthread_mutex_unlock(&reaper->scythe);
 			return (reaper);
 		}
+		pthread_mutex_unlock(&reaper->scythe);
 		if (is_dead(reaper->info->philo[i], reaper) == 1)
 			break ;
 		i++;
