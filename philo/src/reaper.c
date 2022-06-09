@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 17:13:44 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/06/08 16:43:48 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/06/09 11:50:28 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,46 +30,32 @@ unsigned long long	get_now_reaper(t_info *info)
 	return (now);
 }
 
-void	set_last_eat(t_philo *philo, t_reaper *reaper)
+int	is_it_dead(t_reaper *reaper, t_philo *philo)
 {
-	pthread_mutex_lock(&reaper->scythe);
-	philo->last_time_eat = get_now(philo);
-	philo->nb_eat++;
-	pthread_mutex_unlock(&reaper->scythe);
+	if (get_now_reaper(reaper->info) - \
+			get_last_eat(philo) > \
+			(unsigned long long)reaper->info->time_to_die)
+		return (1);
+	return (0);
 }
 
-unsigned long long	get_last_eat(t_philo *philo, t_reaper *reaper)
+void	*my_while(t_reaper *reaper, int i)
 {
-	(void)reaper;
-	unsigned long long	ret;
-
-	ret = philo->last_time_eat;
-	return (ret);
-}
-
-void	*reaper(void *start)
-{
-	t_reaper	*reaper;
-	int			i;
-
-	reaper = (t_reaper *)start;
-	i = 0;
 	while (1)
 	{
 		pthread_mutex_lock(&reaper->scythe);
 		if (have_all_eat(reaper->info) == 0)
 			return (wipe_all(reaper->info), NULL);
-		if (get_now_reaper(reaper->info) - \
-				get_last_eat(reaper->info->philo[i], reaper) > \
-				(unsigned long long)reaper->info->time_to_die + 1)
+		if (is_it_dead(reaper, reaper->info->philo[i]))
 		{
 			pthread_mutex_unlock(&reaper->scythe);
 			sleeping(1);
-			ft_putstr("has died\n", reaper->info->philo[i]);
-			pthread_mutex_lock(&reaper->scythe);
-			reaper->info->is_dead = 1;
-			pthread_mutex_unlock(&reaper->scythe);
-			return (reaper);
+			if (ft_putstr("has died\n", reaper->info->philo[i]) != 1)
+			{
+				pthread_mutex_lock(&reaper->scythe);
+				reaper->info->is_dead = 1;
+				return (pthread_mutex_unlock(&reaper->scythe), reaper);
+			}
 		}
 		pthread_mutex_unlock(&reaper->scythe);
 		if (is_dead(reaper->info->philo[i], reaper) == 1)
@@ -78,5 +64,14 @@ void	*reaper(void *start)
 		if (i >= reaper->info->nb_philo)
 			i = 0;
 	}
+	return (NULL);
+}
+
+void	*reaper(void *start)
+{
+	t_reaper	*reaper;
+
+	reaper = (t_reaper *)start;
+	my_while(reaper, 0);
 	return (NULL);
 }

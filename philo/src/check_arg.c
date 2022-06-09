@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 17:20:10 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/06/08 12:03:48 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/06/09 13:11:28 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,16 @@ int	check_arg(int argc, char **argv, t_info *info)
 	info->start_time = info->get_time;
 	if (double_check(info) == 1)
 		return (1);
+	return (0);
+}
+
+int	init_reaper(t_info *info)
+{
+	info->reaper->info = info;
+	if (pthread_mutex_init(&info->reaper->scythe, NULL) != 0)
+		return (free_fun(info), 1);
+	if (pthread_create(&info->reaper->my_reaper, NULL, reaper, info->reaper) \
+			!= 0)
+		return (free_fun(info), 1);
 	return (0);
 }

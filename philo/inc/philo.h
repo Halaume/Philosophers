@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:00:51 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/06/08 15:54:56 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/06/09 11:03:21 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ void				eating(t_philo *philo);
 void				*reaper(void *start);
 void				wipe_all(t_info *info);
 void				set_last_eat(t_philo *philo, t_reaper *reaper);
-unsigned long long	get_last_eat(t_philo *philo, t_reaper *reaper);
+unsigned long long	get_last_eat(t_philo *philo);
+int					is_it_dead(t_reaper *reaper, t_philo *philo);
 
 //						PRINT
 

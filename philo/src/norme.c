@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 16:53:28 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/06/08 15:45:46 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/06/09 11:50:24 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,20 @@ int	malloc_all(t_info *info)
 	if (init_reaper(info) == 1)
 		return (1);
 	return (0);
+}
+
+void	set_last_eat(t_philo *philo, t_reaper *reaper)
+{
+	pthread_mutex_lock(&reaper->scythe);
+	philo->last_time_eat = get_now(philo);
+	philo->nb_eat++;
+	pthread_mutex_unlock(&reaper->scythe);
+}
+
+unsigned long long	get_last_eat(t_philo *philo)
+{
+	unsigned long long	ret;
+
+	ret = philo->last_time_eat;
+	return (ret);
 }

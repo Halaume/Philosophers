@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 13:51:49 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/06/08 16:37:23 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/06/09 11:52:16 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,30 +19,22 @@ int	took_fork(t_philo *philo)
 		pthread_mutex_lock(philo->fork[0][philo->nb - 1]);
 		philo->fork_left = 1;
 		if (ft_putstr("has taken a fork\n", philo) == 1)
-		{
 			return (unlock_fork(philo), 1);
-		}
 		pthread_mutex_lock(philo->fork[0][philo->nb]);
 		philo->fork_right = 1;
 		if (ft_putstr("has taken a fork\n", philo) == 1)
-		{
 			return (unlock_fork(philo), 1);
-		}
 	}
 	else
 	{
 		pthread_mutex_lock(philo->fork[0][philo->nb]);
 		philo->fork_right = 1;
 		if (ft_putstr("has taken a fork\n", philo) == 1)
-		{
 			return (unlock_fork(philo), 1);
-		}
 		pthread_mutex_lock(philo->fork[0][philo->nb - 1]);
 		philo->fork_left = 1;
 		if (ft_putstr("has taken a fork\n", philo) == 1)
-		{
 			return (unlock_fork(philo), 1);
-		}
 	}
 	return (0);
 }
