@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 17:13:44 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/06/09 11:50:28 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/06/10 10:59:50 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	wipe_all(t_info *info)
 {
-	pthread_mutex_lock(&info->reaper->scythe);
 	info->is_dead = 1;
 	pthread_mutex_unlock(&info->reaper->scythe);
 }
