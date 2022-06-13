@@ -6,11 +6,25 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 11:11:02 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/05/25 12:49:12 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/06/10 14:41:27 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
+
+long long	i_hate_you_so_much(long long nbr, int i, const char *nptr)
+{
+	while (nptr[i] >= '0' && nptr[i] <= '9')
+	{
+		if ((nbr * -1) <= -2147483648)
+			return (-1);
+		nbr = nbr * 10 + (nptr[i] - '0');
+		i++;
+		if (nptr[i] && (nptr[i] < '0' || nptr[i] > '9'))
+			return (-1);
+	}
+	return (nbr);
+}
 
 long long	ft_atoi(const char *nptr)
 {
@@ -28,14 +42,7 @@ long long	ft_atoi(const char *nptr)
 		return (-1);
 	else if (nptr[i] && nptr[i] == '+')
 		i++;
-	while (nptr[i] >= '0' && nptr[i] <= '9')
-	{
-		if ((nbr * -1) <= -2147483648)
-			return (-1);
-		nbr = nbr * 10 + (nptr[i] - '0');
-		i++;
-		if (nptr[i] && (nptr[i] < '0' || nptr[i] > '9'))
-			return (-1);
-	}
-	return (nbr);
+	if (nptr[i] < '0' || nptr[i] > '9')
+		return (-1);
+	return (i_hate_you_so_much(nbr, i, nptr));
 }

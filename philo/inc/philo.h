@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:00:51 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/06/09 11:03:21 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/06/10 15:28:18 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ typedef struct s_info
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
+	int				writing_done;
+	int				*is_init;
 	pthread_mutex_t	writing;
 	pthread_mutex_t	**fork;
 }	t_info;
@@ -61,6 +63,7 @@ typedef struct s_reaper
 {
 	t_info			*info;
 	pthread_t		my_reaper;
+	int				scythe_done;
 	pthread_mutex_t	scythe;
 }	t_reaper;
 
@@ -70,6 +73,7 @@ int					check_arg(int argc, char **argv, t_info *info);
 void				init_this_philo(t_info *info, t_philo *philo, int nb);
 int					init_reaper(t_info *info);
 int					malloc_all(t_info *info);
+int					init_info_is_init(t_info *info);
 
 //						ROUTINE
 

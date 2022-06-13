@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:07:48 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/06/09 14:26:08 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/06/10 15:17:13 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,11 @@ int	main(int argc, char **argv)
 
 	i = -1;
 	info.reaper = &reaper;
+	info.reaper->scythe_done = 0;
+	info.writing_done = 0;
 	if (pthread_mutex_init(&info.writing, NULL) != 0)
 		return (1);
+	info.writing_done = 1;
 	if (check_arg(argc, argv, &info) == 1)
 		return (1);
 	if (init_muthread(&info) == 1)

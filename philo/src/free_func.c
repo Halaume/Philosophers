@@ -6,25 +6,44 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 13:44:36 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/06/08 12:00:57 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/06/10 15:41:25 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
+
+int	init_info_is_init(t_info *info)
+{
+	int	i;
+
+	i = -1;
+	info->is_init = NULL;
+	info->is_init = malloc(sizeof(int) * info->nb_philo);
+	if (!info->is_init)
+		return (1);
+	while (++i < info->nb_philo)
+		info->is_init[i] = 0;
+	return (0);
+}
 
 void	destroy_mut(t_info *info)
 {
 	int	i;
 
 	i = 0;
-	pthread_mutex_destroy(&info->reaper->scythe);
-	while (i < info->nb_philo)
+	if (info->reaper->scythe_done == 1)
+		pthread_mutex_destroy(&info->reaper->scythe);
+	if (info->is_init)
 	{
-		if (info->fork[i])
-			pthread_mutex_destroy(info->fork[i]);
-		i++;
+		while (i < info->nb_philo)
+		{
+			if (info->is_init[i] == 1)
+				pthread_mutex_destroy(info->fork[i]);
+			i++;
+		}
 	}
-	pthread_mutex_destroy(&info->writing);
+	if (info->writing_done == 1)
+		pthread_mutex_destroy(&info->writing);
 }
 
 void	free_fun(t_info *info)
@@ -49,4 +68,6 @@ void	free_fun(t_info *info)
 		free(info->philo);
 	if (info->thread_philo)
 		free(info->thread_philo);
+	if (info->is_init)
+		free(info->is_init);
 }

@@ -6,7 +6,7 @@
 /*   By: ghanquer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 17:13:44 by ghanquer          #+#    #+#             */
-/*   Updated: 2022/06/10 10:59:50 by ghanquer         ###   ########.fr       */
+/*   Updated: 2022/06/10 14:27:19 by ghanquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	*my_while(t_reaper *reaper, int i)
 				reaper->info->is_dead = 1;
 				return (pthread_mutex_unlock(&reaper->scythe), reaper);
 			}
+			pthread_mutex_lock(&reaper->scythe);
 		}
 		pthread_mutex_unlock(&reaper->scythe);
 		if (is_dead(reaper->info->philo[i], reaper) == 1)
